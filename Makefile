@@ -30,6 +30,9 @@ pre-commit-run:
 
 docs-init:
 	git submodule update --init --recursive
+	cd docs/terraform-provider && \
+		git sparse-checkout init --cone && \
+		git sparse-checkout set examples
 
 docs-update:
 	git submodule update --remote --merge

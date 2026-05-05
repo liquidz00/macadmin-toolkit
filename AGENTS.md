@@ -91,7 +91,7 @@ without touching scripts or Terraform.
 ### Terraform (under `terraform/`)
 - 2-space indent. `terraform fmt -recursive` enforced via pre-commit.
 - One file per resource type / domain (`scripts.tf`, `xattrs.tf`, `app_installers.tf`, etc.).
-- `variables.tf` for variable declarations. `main.tf` for provider config. `locals.tf` for `locals { ... }` blocks.
+- `variables.tf` holds `variable {}` declarations plus module-level `locals {}` blocks (path constants, etc.). `main.tf` for provider config. Resource-specific locals can live inline in the file that uses them. `*.tf` resource files are organized by domain (`buildings.tf`, `scripts.tf`, etc.).
 - Variable names: `snake_case`. Resource names: `snake_case`. Values use `for_each` over `count` whenever the underlying source is a map or set.
 
 ### YAML (under `.github/workflows/`)
