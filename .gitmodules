@@ -16,3 +16,6 @@
 [submodule "docs/managed-python"]
 	path = docs/managed-python
 	url = https://github.com/macadmins/python
+[submodule "docs/terraform-provider"]
+	path = docs/terraform-provider
+	url = https://github.com/deploymenttheory/terraform-provider-jamfpro.git

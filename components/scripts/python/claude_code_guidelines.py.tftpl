@@ -1,0 +1,52 @@
+#!/usr/local/bin/managed_python3
+"""
+Deploy Claude Code guidelines.
+
+Atomically writes the org-wide CLAUDE.md from VCS to
+/Library/Application Support/ClaudeCode/. Source content is injected at
+terraform apply time via templatefile().
+
+Written 05/05/2026 — Andrew Lerman (@liquidz00)
+"""
+
+from __future__ import annotations
+
+import base64
+import os
+from pathlib import Path
+
+from pymdm import MdmLogger
+
+__version__ = "1.0.0"
+SCRIPT_NAME = "claude_code_guidelines.py"
+
+# Templated by terraform — base64-encoded contents of components/configs/claudecode/CLAUDE.md.
+CLAUDE_MD_B64 = "${claude_md_b64}"
+
+TARGET = Path("/Library/Application Support/ClaudeCode/CLAUDE.md")
+
+logger = MdmLogger()
+
+
+def main() -> None:
+    logger.log_startup(SCRIPT_NAME, __version__)
+
+    content = base64.b64decode(CLAUDE_MD_B64)
+    logger.info(f"Decoded {len(content):,} bytes from templated payload")
+
+    TARGET.parent.mkdir(parents=True, exist_ok=True)
+
+    # Atomic write — sibling temp file, then os.replace(). Atomic on POSIX
+    # when source and destination share a filesystem (they do here).
+    tmp = TARGET.parent / (TARGET.name + ".tmp")
+    tmp.write_bytes(content)
+    os.chmod(tmp, 0o644)
+    tmp.replace(TARGET)
+    logger.info(f"Wrote {TARGET}")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as exc:
+        logger.log_exception(f"{SCRIPT_NAME} failed", exc, exit_code=1)

@@ -1,0 +1,31 @@
+#!/usr/local/bin/managed_python3
+"""
+Extension attribute — Claude Code guidelines compliance.
+
+Reports whether /Library/Application Support/ClaudeCode/CLAUDE.md matches
+the source-of-truth SHA-256 baked in by terraform at apply time.
+
+Output values (via Jamf's <result> convention):
+    Compliant   — file present and hash matches expected.
+    Modified    — file present but hash mismatch (someone edited it).
+    Missing     — file not present at expected location.
+"""
+
+import hashlib
+from pathlib import Path
+
+# Templated by terraform — sha256() of components/configs/claudecode/CLAUDE.md.
+EXPECTED_SHA256 = "${expected_sha256}"
+
+TARGET = Path("/Library/Application Support/ClaudeCode/CLAUDE.md")
+
+try:
+    if not TARGET.exists():
+        result = "Missing"
+    else:
+        actual = hashlib.sha256(TARGET.read_bytes()).hexdigest()
+        result = "Compliant" if actual == EXPECTED_SHA256 else "Modified"
+except Exception as exc:
+    result = f"Error: {type(exc).__name__}"
+
+print(f"<result>{result}</result>")

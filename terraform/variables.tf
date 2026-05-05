@@ -1,5 +1,15 @@
+locals {
+  repo_root      = "${path.module}/.."
+  components_dir = "${local.repo_root}/components"
 
-
+  scripts_dir         = "${local.components_dir}/scripts/"
+  py_dir              = "${local.scripts_dir}/python"
+  shell_dir           = "${local.scripts_dir}/shell"
+  powershell_dir      = "${local.scripts_dir}/powershell"
+  xattrs_dir          = "${local.components_dir}/xattrs"
+  vendor_provided_dir = "${local.components_dir}/vendor-provided"
+  configs_dir         = "${local.components_dir}/configs"
+}
 
 
 variable "jamfpro_instance_fqdn" {
