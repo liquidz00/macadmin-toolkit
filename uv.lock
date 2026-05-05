@@ -452,6 +452,7 @@ source = { virtual = "." }
 [package.optional-dependencies]
 dev = [
     { name = "pre-commit" },
+    { name = "pymdm" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "pytest-mock" },
@@ -461,6 +462,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "pre-commit", marker = "extra == 'dev'", specifier = ">=4.0.0" },
+    { name = "pymdm", marker = "extra == 'dev'", specifier = ">=0.5.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=5.0.0" },
     { name = "pytest-mock", marker = "extra == 'dev'", specifier = ">=3.14.0" },
@@ -670,6 +672,15 @@ wheels = [
 [package.optional-dependencies]
 crypto = [
     { name = "cryptography" },
+]
+
+[[package]]
+name = "pymdm"
+version = "0.5.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/a4/d0/6e32ce78bffe7d09565fefa9f727a90feb9f1b63fb7c7a65a127408e5a1e/pymdm-0.5.0.tar.gz", hash = "sha256:f5bbafd377c5ba25d97ea549268e3733fafadc8b167b70f0192936921086ca58", size = 50059, upload-time = "2026-04-18T18:49:31.384Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c6/9f/f8adfb95c3c82230959ff46fe18b4257a63a67eb4532db965a4ecaba8927/pymdm-0.5.0-py3-none-any.whl", hash = "sha256:204b1519cb5f973e9022268f4ee64bcebf6f4ef7874a986ab6f8b72dc3aab1bd", size = 38470, upload-time = "2026-04-18T18:49:29.795Z" },
 ]
 
 [[package]]
