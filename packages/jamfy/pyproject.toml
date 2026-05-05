@@ -1,0 +1,27 @@
+[project]
+name = "jamfy"
+version = "0.1.0"
+description = "CLI for Jamf Pro automations: exports, change tracking, app installer sync"
+requires-python = ">=3.13"
+dependencies = [
+  "asyncclick>=8.1.7",
+  "click>=8.1.7",
+  "common",
+  "rich>=13.9.0",
+]
+
+[project.scripts]
+jamfy = "jamfy.cli:main"
+
+[tool.uv.sources]
+common = { workspace = true }
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

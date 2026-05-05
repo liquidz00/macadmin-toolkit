@@ -1,0 +1,58 @@
+[project]
+name = "macadmin-toolkit"
+version = "0.1.0"
+description = "Scripts, Claude skills, extension attributes, and Terraform patterns for managing macOS fleets"
+requires-python = ">=3.13"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pre-commit>=4.0.0",
+  "pytest>=8.0.0",
+  "pytest-cov>=5.0.0",
+  "pytest-mock>=3.14.0",
+  "ruff>=0.7.0",
+]
+
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+src = ["packages", "tests"]
+exclude = [
+  "docs",
+  "exports",
+  "components/vendor-provided",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint]
+select = [
+  "E101",
+  "F401",
+  "F403",
+  "I001",
+  "N801",
+  "N802",
+  "N806",
+]
+ignore = ["E722"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = ["tests"]
+addopts = [
+  "--color=yes",
+  "--durations=5",
+]
+
+[tool.coverage.run]
+omit = [
+  "tests/*",
+  "components/vendor-provided/*",
+]
