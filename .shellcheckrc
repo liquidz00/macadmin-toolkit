@@ -1,0 +1,19 @@
+# Default shell. Standardize on bash for this repo so shellcheck has a known target.
+# Individual files can override with `# shellcheck shell=...` if needed.
+shell=bash
+
+# SC1091 — "Not following: ./file.sh was not specified as input"
+# Common when scripts source helpers at runtime (Jamf, includes, etc.) where
+# shellcheck can't follow the path. Disable globally; re-enable per-file with
+# `# shellcheck source=path/to/file` when you want the check.
+disable=SC1091
+
+# SC2155 — "Declare and assign separately to avoid masking return values."
+# Stylistic; we accept `local x=$(cmd)` since most Mac admin scripts don't
+# need to inspect the return value.
+disable=SC2155
+
+# SC2154 — "Variable is referenced but not assigned."
+# Jamf passes parameters via $4-$11 implicitly. shellcheck can't see that.
+# If you're not writing a Jamf script and want this check, override per-file.
+disable=SC2154
