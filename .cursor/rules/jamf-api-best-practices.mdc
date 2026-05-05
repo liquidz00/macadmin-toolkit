@@ -1,0 +1,67 @@
+---
+description: Rules for Jamf API integration and AI-compatible Python development
+alwaysApply: false
+---
+# Jamf API Integration and AI-Compatible Development
+
+## Jamf API Best Practices
+- Reference the official Jamf Pro Developer documentation for all API usage:
+  - https://developer.jamf.com/
+  - https://developer.jamf.com/classic_api
+  - https://developer.jamf.com/jamf-pro/reference/
+- Include links to relevant Jamf docs in comments or commit messages when implementing or updating API calls
+- Prefer the Pro API over Classic API when possible, unless a feature is only available in the Classic API
+- Follow authentication, pagination, and rate-limiting guidance as described in Jamf documentation
+
+## OpenAPI Schema Usage
+- Consult the official Jamf OpenAPI schema to understand expected request and response formats
+- Parse or reference field types and structures from the schema to validate payloads
+- Generate response models with Pydantic where possible to support explicit typing and schema validation
+
+## Error Handling
+- Catch only specific, expected exceptions:
+  - requests.exceptions.HTTPError
+  - requests.exceptions.ConnectionError
+  - json.JSONDecodeError
+  - Custom exceptions like JamfApiError
+- Avoid general `except Exception` blocks unless absolutely necessary
+- If a general exception is used:
+  - Document the reasoning in a code comment
+  - Log the full exception trace and request context
+- Never use bare `except:` blocks
+- Use structured logging for error traceability and AI observability
+
+## AI Integration & Tooling Compatibility
+- Write clear, composable functions with well-defined inputs and outputs
+- Avoid hidden state and side effects where possible
+- Use consistent naming conventions to help with code interpretation by LLMs and agents
+- Annotate interfaces with type hints and docstrings to improve discoverability
+- Design modules and utilities to be used independently or chained together as AI “playbooks”
+- Document each function’s purpose, expected input shape, and output format for downstream use
+
+## Observability and Logging
+- Use Python’s `logging` module with structured output (e.g., JSON or key-value logs)
+- Include contextual metadata in logs (e.g., API endpoint, serial number, device ID)
+- Avoid printing sensitive information (e.g., tokens, user emails)
+- Ensure logs can be parsed and analyzed by external tools or AI agents
+
+## Async-First Development
+- Write asynchronous functions and use `async`/`await` wherever possible, especially for:
+  - API requests
+  - File or network I/O
+  - Concurrency across device or user workflows
+- Prefer `httpx.AsyncClient` over `requests` for Jamf API integrations
+- Use `asyncio.gather()` or task groups for concurrent workloads like batch device lookups or updates
+- Only use synchronous code when:
+  - Required by third-party libraries
+  - Used in isolated CLI or script-entry wrappers
+  - Performance or complexity tradeoffs make async unjustified
+- Document rationale when reverting to synchronous methods
+
+## Development Workflow
+- Include test coverage for Jamf API client methods and error conditions
+- Maintain up-to-date internal documentation or README sections for:
+  - API usage patterns
+  - Model generation strategies
+  - Known edge cases and workarounds
+- Encourage modularity to enable safe use by external agents or future automated integrations

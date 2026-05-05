@@ -1,0 +1,62 @@
+---
+description: Always reference docs/ submodules before answering questions about open-source mac admin tools. If no submodule exists for a tool in question, prompt the user to provide documentation. Never assume tool behavior without validation.
+alwaysApply: true
+---
+
+# Rule: Reference `docs/` Submodules Before Answering
+
+## When this applies
+
+Any question about an open-source mac admin tool used in or by this repository
+— Installomator, swiftDialog, outset, dockutil, pymdm, and any other tool whose
+wiki or repository is mounted as a submodule under `docs/`.
+
+## Required behavior
+
+1. **Check `docs/` first.** Before answering any question about a third-party
+   tool — its CLI flags, expected inputs, behavior, error modes, configuration
+   syntax — list the contents of the relevant `docs/<tool>/` submodule and read
+   the relevant page(s).
+
+2. **If no submodule exists for the tool in question, stop and ask.** Do not
+   answer from training data alone. Respond with:
+   > I don't see a `docs/` submodule for `<tool>`. Can you share the relevant
+   > documentation, link, or man page so I can give you a grounded answer?
+
+   Then wait for the user's input before proceeding.
+
+3. **Never assume tool behavior without validation.** If the docs don't cover
+   the specific question, say so explicitly:
+   > The `docs/<tool>/` submodule covers X but doesn't address Y. I can either
+   > (a) reason from related sections, (b) write code that fails loudly if the
+   > assumption is wrong, or (c) wait for you to confirm Y. Which would you prefer?
+
+## Why this rule exists
+
+Mac admin tooling is a small, fast-moving space. Tool behavior changes between
+versions, flags get renamed, and stale model knowledge produces confidently
+wrong answers that waste an admin's time at best and break a managed fleet at
+worst. The `docs/` directory exists specifically so agents can ground their
+answers in a current source of truth that the human controls.
+
+## What "checking docs" looks like
+
+Before answering "how does Installomator handle the `IGNORE_APP_STORE_APPS`
+variable":
+
+1. Run `ls docs/installomator/` to see available pages.
+2. Read the relevant page(s) (e.g. `docs/installomator/Variables.md`).
+3. Quote or summarize the relevant section in your answer with a path reference.
+4. If the docs don't address the question directly, say so before speculating.
+
+## Anti-patterns
+
+- ❌ Answering "Installomator runs `installer -pkg ...`" from memory without checking `docs/installomator/`.
+- ❌ Assuming `dockutil --add /Applications/Slack.app` is the right syntax without verifying `docs/dockutil/`.
+- ❌ Recommending a flag that no longer exists in the current version.
+
+## Patterns to follow
+
+- ✅ "Looking at `docs/installomator/Configuration.md`, the variable is documented as ..."
+- ✅ "I don't see a submodule for `nudge`. Can you point me at the relevant docs?"
+- ✅ "The `docs/dockutil/` README covers `--add` but doesn't describe the `--position` flag's behavior with `--allhomes`. Want me to test it, or do you have a known answer?"

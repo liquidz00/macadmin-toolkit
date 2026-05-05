@@ -1,0 +1,93 @@
+---
+description: Voice, tone, and structure for documentation, docstrings, comments, README sections, and any prose written into the repository.
+alwaysApply: true
+---
+
+# Rule: Technical Writing Style
+
+This rule applies to ALL prose in the repository: docstrings, README sections,
+inline comments, commit messages, terraform comments, shell-script header
+comments, markdown under `docs/`, and any package READMEs.
+
+For Python docstring *syntax* (Sphinx/reST format, `:param:` markup, etc.), see
+`sphinx-style-docstrings.mdc`. This rule covers tone and structure, not syntax.
+
+## Voice
+
+- **Direct, technical, no marketing voice.** "Returns the patch list" — not
+  "This handy function will return a wonderful patch list."
+- **Active voice over passive.** "The function validates the token" — not
+  "The token is validated by the function."
+- **Second person ("you") is fine for user-facing docs** like the README and
+  getting-started guides. Don't mix with first person ("we") in the same document.
+- **No filler.** Cut "in order to" → "to". Cut "It is important to note that" →
+  just say the thing. Cut "this section will explain" → just explain it.
+
+## Docstrings (Python)
+
+- The opening sentence is a one-line summary of what the function does. No more.
+- **Don't restate the function name.** `def get_user(...)` doesn't need
+  "Get a user." — that's redundant. Lead with what's interesting:
+  *"Looks up a user by email or serial number, falling back to LDAP if Jamf returns no match."*
+- **Don't document obvious parameters** (e.g. `:param logger: A logger.`). Document
+  *constraints*: "must be a non-empty string," "raises if zero," etc.
+- **Document the why, not the what**, when behavior is surprising.
+
+## Inline comments
+
+- **Default: don't write them.** Well-named identifiers and a clear function
+  structure should make code self-documenting.
+- **Write a comment when the WHY is non-obvious**: a hidden constraint, a
+  workaround for a specific bug, a subtle invariant, behavior that would
+  surprise a reader.
+- **Don't narrate WHAT the code does.** `i += 1  # increment i` is noise.
+- **Don't reference current task or commit context.** "Added for ticket #347"
+  belongs in the PR description, not the code — it rots fast.
+
+## Shell-script headers
+
+Every shell script in `components/scripts/shell/` should start with a header
+comment describing:
+- Purpose (one sentence)
+- Jamf parameters used (`$4`, `$5`, ...) and what each represents
+- Expected exit codes
+
+Example:
+```bash
+#!/bin/bash
+#
+# Deploy CLAUDE.md to /Library/Application Support/ClaudeCode/.
+#
+# Jamf parameters:
+#   $4 — base64-encoded markdown content (injected by templatefile())
+#
+# Exits 0 on success, 1 if the target directory is not writable.
+```
+
+## Terraform comments
+
+- Comment the *intent* of a non-obvious block above it.
+- Don't comment HCL syntax — that's what the Terraform docs are for.
+- Use `#` for single-line comments, never `//` (which works but isn't idiomatic HCL).
+
+## Markdown / README
+
+- **Lead with what the project / section is**, not its history.
+- **Tables for structured data** (flag → meaning, file → purpose).
+- **Code blocks with language identifiers** (` ```bash `, ` ```python `, never plain ` ``` `).
+- **Headings are sentence case**: "Getting started", not "Getting Started".
+- **No emoji** unless explicitly requested. This is a technical document.
+
+## Commit messages
+
+- Conventional Commits prefix (`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`,
+  `test:`, `build:`, `ci:`).
+- Subject under 72 characters, imperative mood ("add the thing," not "added the thing").
+- Body explains *why*, not *what*. The diff already shows what changed.
+
+## Anti-patterns
+
+- ❌ "This function is responsible for the validation of the user input." → ✅ "Validates user input."
+- ❌ `# loop through the list` (narrating the obvious) → ✅ no comment, or `# skip archived users — see #239` (the WHY).
+- ❌ Restating the function name in its docstring.
+- ❌ Marketing voice ("blazing-fast," "production-grade," "elegant") in a technical document.

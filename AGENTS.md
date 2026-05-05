@@ -37,6 +37,27 @@ docs/                                     # git submodules of frequently-referen
 .github/                                  # CODEOWNERS + workflows
 ```
 
+## Required behavior: ground answers in `docs/`
+
+When asked about an open-source mac admin tool used in or by this repo
+(Installomator, swiftDialog, outset, dockutil, pymdm, etc.):
+
+1. **Check `docs/<tool>/` first** before answering. The submodule is the source
+   of truth for that tool's current behavior.
+2. **If no submodule exists**, do not answer from training data. Ask the user
+   to provide documentation, a link, or a man page.
+3. **Never assume tool behavior without validation.** If the docs don't cover
+   the specific question, say so explicitly before speculating.
+
+This rule exists because mac admin tooling moves fast — flags get renamed and
+behavior changes between versions. Stale model knowledge produces confidently
+wrong answers that waste an admin's time at best and break a managed fleet at
+worst.
+
+The full rule with examples and anti-patterns is at
+`.cursor/rules/docs-reference.mdc`. The same applies to Claude Code, Cursor,
+or any other agent operating in this repo.
+
 ## Key pattern: Terraform `templatefile` for content delivery
 
 The unifying pattern across this repo is **content lives in source files, scripts
@@ -82,7 +103,7 @@ without touching scripts or Terraform.
 ### Setup
 ```bash
 git submodule update --init --recursive   # fetch the docs/ submodules
-uv sync --all-extras                      # set up the Python workspace
+make install-dev                          # uv sync --all-packages --all-extras
 make pre-commit-install                   # enable pre-commit hooks
 ```
 

@@ -1,0 +1,117 @@
+---
+description: Python conventions for the macadmin-toolkit workspace. Apply these rules when generating or editing Python under packages/ or tests/.
+globs: ["packages/**/*.py", "tests/**/*.py"]
+alwaysApply: true
+---
+
+# Python Conventions
+
+## Project structure
+
+- The Python code lives in `packages/`, organized as a **uv workspace**.
+  Each subdirectory of `packages/` is its own member with its own `pyproject.toml`.
+- Each package uses a `src/` layout: `packages/<name>/src/<name>/`.
+- Tests live in `tests/` at the repo root (flat layout — no nested directories).
+- Workspace siblings are referenced via `[tool.uv.sources] sibling = { workspace = true }` in the consuming package's `pyproject.toml`.
+- Do NOT put Python code under `components/scripts/python/` and expect it to be importable as a package — that directory is for standalone deployment scripts, not library code.
+
+## Code style
+
+- **Ruff for both linting AND formatting.** Configuration lives in the root
+  `pyproject.toml` under `[tool.ruff]`. Do NOT use Black, isort, autopep8, or yapf.
+- **Line length 100, double quotes, target Python 3.13.**
+- **Relative imports within the same package** (`from .client import ApiClient`,
+  `from ..models.patch import PatchTitle`) are correct and preferred. Don't
+  rewrite intra-package imports to absolute form.
+- Imports across workspace members ARE absolute (`from common.clients.jamf import JamfClient`) since each member is its own installable package.
+- **PEP 8 naming:**
+  - `snake_case` for functions and variables
+  - `PascalCase` for classes
+  - `UPPER_CASE` for module-level constants
+  - Tests are exempt from `N806` — PascalCase mock variables (e.g. `MockTokenManager = MagicMock()`) are intentional.
+
+## Type hints
+
+- Type hints required on every public function / method parameter and return.
+- **Modern union syntax**: `str | None`, `list[int]`, `dict[str, Any]`.
+- Do NOT use `Optional[T]`, `Union[A, B]`, `List[T]`, `Dict[K, V]` — these are
+  pre-3.10 forms and don't match the codebase.
+- Use `from __future__ import annotations` only when needed for forward references.
+- Import the rest from `typing` only when the builtin / 3.10+ form doesn't exist
+  (`TypedDict`, `TypeVar`, `Literal`, `Callable`, `Protocol`, `Any`).
+
+## Docstrings
+
+- **Sphinx / reStructuredText** style with `:param:`, `:type:`, `:return:`,
+  `:rtype:`, `:raises:` markup. See `sphinx-style-docstrings.mdc` for the
+  complete syntax rule.
+- The opening `"""` goes on its own line immediately after the function /
+  class signature.
+- Don't restate the function name in the docstring — see `technical-writing.mdc`
+  for tone and structure rules.
+
+## Async-first
+
+- API-touching code should be async. CLI is built on `asyncclick`.
+- Use `httpx.AsyncClient` for HTTP — not `requests` and not `httpx.Client`.
+- When calling synchronous code from an async context, use `asyncio.to_thread`.
+- Tests for async code must be decorated with `@pytest.mark.asyncio`.
+
+## Pydantic 2
+
+- Models inherit from `pydantic.BaseModel`.
+- Use `.model_dump(mode="json")` when producing JSON output (preserves enums,
+  datetimes, nested models correctly).
+- Use `.model_dump()` (no mode) for in-Python dict use.
+- Use `field_validator` and `model_validator` decorators for validation —
+  not the deprecated `@validator` (Pydantic 1).
+
+## Errors
+
+- Catch only specific, expected exceptions:
+  - `httpx.HTTPError`, `httpx.ConnectError`
+  - `json.JSONDecodeError`
+  - Your own custom exception classes
+- Avoid bare `except:` — always at minimum `except Exception:`.
+- If you use `except Exception:`, add a comment explaining why the broad catch is justified, and log the full exception with `logger.exception(...)` (not `logger.error(str(e))`).
+
+## Testing
+
+- `pytest` + `pytest-asyncio` + `pytest-mock` + `unittest.mock`.
+- Shared fixtures live in `tests/conftest.py`.
+- Mock at the network boundary: `httpx.AsyncClient.request`, the relevant
+  client class, or a wrapping API client. Don't mock individual model methods
+  unless you're explicitly testing the model.
+- Tests should be deterministic — no live API calls, no timing-dependent assertions, no reliance on system locale or timezone.
+
+## CLI
+
+- CLIs use `click` (sync) or `asyncclick` (async). The entry point is wired in
+  `pyproject.toml` under `[project.scripts]`.
+- Don't bake `click.echo()` / `click.prompt()` into business logic. Keep
+  Click-specific calls in the CLI module so the underlying logic remains
+  importable as a library.
+
+## Dependencies
+
+- Managed by `uv`. Run `uv sync --all-packages --all-extras` (or `make install-dev`)
+  to set up the full workspace.
+- Production deps in each member's `[project.dependencies]`. Dev tooling lives
+  in the root `pyproject.toml` under `[project.optional-dependencies] dev`.
+- Don't add new top-level runtime dependencies casually. If a dependency is
+  used by only one workspace member, list it there — not at the root.
+
+## Logging
+
+- Use the `logging` module. Module-level loggers via `logger = logging.getLogger(__name__)`.
+- Use `logger.debug` / `info` / `warning` / `error` / `exception` rather than `print()`.
+- Don't log secrets (tokens, passwords, full request headers, full response bodies that may contain PII).
+- Include context in log messages — serial numbers, computer IDs, request paths — to make logs grep-able.
+
+## What this codebase is NOT
+
+- Not a web app. There are no Flask / Django / FastAPI routes (yet — `jamfy`
+  may grow webhook handlers, but it's a CLI today). Don't suggest web-framework
+  patterns for HTTP servers, sessions, or templating.
+- Not a place for `requests`. Use `httpx`.
+- Not a place for `Optional[T]` / `Union[A, B]` / `List[T]` / `Dict[K, V]`.
