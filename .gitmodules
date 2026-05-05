@@ -1,0 +1,18 @@
+[submodule "docs/installomator"]
+	path = docs/installomator
+	url = https://github.com/Installomator/Installomator.wiki.git
+[submodule "docs/swiftdialog"]
+	path = docs/swiftdialog
+	url = https://github.com/swiftDialog/swiftDialog.wiki.git
+[submodule "docs/outset"]
+	path = docs/outset
+	url = https://github.com/macadmins/outset.wiki.git
+[submodule "docs/pymdm"]
+	path = docs/pymdm
+	url = https://github.com/liquidz00/pymdm.git
+[submodule "docs/escrow-buddy"]
+	path = docs/escrow-buddy
+	url = https://github.com/macadmins/escrow-buddy.wiki.git
+[submodule "docs/managed-python"]
+	path = docs/managed-python
+	url = https://github.com/macadmins/python
