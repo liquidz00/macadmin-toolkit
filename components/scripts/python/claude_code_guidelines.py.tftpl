@@ -17,19 +17,19 @@ from pathlib import Path
 
 from pymdm import MdmLogger
 
-__version__ = "1.0.0"
-SCRIPT_NAME = "claude_code_guidelines.py"
+# Constants
+SCRIPT_NAME = Path(__file__).name
+VERSION = "1.0.0"
+TARGET = Path("/Library/Application Support/ClaudeCode/CLAUDE.md")
 
 # Templated by terraform — base64-encoded contents of components/configs/claudecode/CLAUDE.md.
 CLAUDE_MD_B64 = "${claude_md_b64}"
-
-TARGET = Path("/Library/Application Support/ClaudeCode/CLAUDE.md")
 
 logger = MdmLogger()
 
 
 def main() -> None:
-    logger.log_startup(SCRIPT_NAME, __version__)
+    logger.log_startup(SCRIPT_NAME, VERSION)
 
     content = base64.b64decode(CLAUDE_MD_B64)
     logger.info(f"Decoded {len(content):,} bytes from templated payload")
