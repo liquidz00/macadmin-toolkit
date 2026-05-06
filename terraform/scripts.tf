@@ -34,3 +34,27 @@ resource "jamfpro_script" "claude_code_guidelines" {
     }
   )
 }
+
+resource "jamfpro_script" "swift_dialog_notification_template" {
+  name            = "Swift Dialog Notification Template"
+  category_id     = jamfpro_category.standard_issue.id
+  priority        = "AFTER"
+  script_contents = file("${local.vendor_provided_dir}/swiftDialog-notification-template.sh")
+  info            = "Template script for basic notification via swiftDialog.\nSee https://swiftdialog.app/examples/jamf-scripts/"
+  parameter4      = "Title option (--title)"
+  parameter5      = "Message option (--message)"
+  parameter6      = "Icon option (--icon)"
+  parameter7      = "Overlay option (--overlayicon)"
+  parameter8      = "Button 1 option (--button1text)"
+  parameter9      = "Button 2 option (--button2text)"
+  parameter10     = "Info button option (--infobuttontext)"
+  parameter11     = "Extra flag"
+}
+
+resource "jamfpro_script" "installomator" {
+  name            = "Installomator"
+  category_id     = jamfpro_category.standard_issue.id
+  priority        = "AFTER"
+  script_contents = file("${local.vendor_provided_dir}/Installomator.sh")
+  info            = "See https://github.com/Installomator/Installomator"
+}
