@@ -1,0 +1,18 @@
+# GitHub Linguist hints — controls the language breakdown shown on the repo's
+# main page. Without these, third-party submodules and vendored scripts
+# dominate the stats and make the repo look like 92% shell or 80% markdown.
+
+# Third-party scripts (Installomator, etc.) — exclude from stats.
+components/vendor-provided/** linguist-vendored
+
+# Submoduled tool documentation — reference material, not our code.
+docs/** linguist-vendored
+
+# Auto-generated content.
+exports/**  linguist-generated
+uv.lock     linguist-generated
+
+# Explicit language identification for files Linguist sometimes mis-detects.
+*.tf       linguist-language=HCL
+*.tfvars   linguist-language=HCL
+*.py.tftpl linguist-language=Python
