@@ -1,7 +1,6 @@
 locals {
-  repo_root      = "${path.module}/.."
-  components_dir = "${local.repo_root}/components"
-
+  repo_root           = "${path.module}/.."
+  components_dir      = "${local.repo_root}/components"
   scripts_dir         = "${local.components_dir}/scripts/"
   py_dir              = "${local.scripts_dir}/python"
   shell_dir           = "${local.scripts_dir}/shell"
