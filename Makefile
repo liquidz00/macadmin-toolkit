@@ -11,7 +11,7 @@ install-dev:
 	$(UV) sync --all-packages --all-extras
 
 format:
-	$(UV) run ruff format packages/ tests/
+	$(UV) run ruff format packages/ tests/ components/
 	terraform -chdir=terraform fmt -recursive
 
 lint:
