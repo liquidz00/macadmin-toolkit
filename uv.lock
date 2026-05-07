@@ -202,7 +202,7 @@ requires-dist = [
     { name = "crowdstrike-falconpy", specifier = ">=1.4.0" },
     { name = "httpx", specifier = ">=0.27.0" },
     { name = "notion-client", specifier = ">=2.2.0" },
-    { name = "pydantic", specifier = ">=2.13.4" },
+    { name = "pydantic", specifier = ">=2.7" },
     { name = "pygithub", specifier = ">=2.4.0" },
     { name = "requests", specifier = ">=2.32.0" },
     { name = "slack-sdk", specifier = ">=3.33.0" },
