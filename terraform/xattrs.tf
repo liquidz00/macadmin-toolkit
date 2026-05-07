@@ -15,3 +15,13 @@ resource "jamfpro_computer_extension_attribute" "claude_code_guidelines" {
     }
   )
 }
+
+resource "jamfpro_computer_extension_attribute" "managed_python_present" {
+  name                   = "Managed Python Present"
+  enabled                = true
+  description            = "Checks installation status of managed python interpreter"
+  data_type              = "STRING"
+  input_type             = "SCRIPT"
+  inventory_display_type = "EXTENSION_ATTRIBUTES"
+  script_contents        = file("${local.xattrs_dir}/managed-python-present.sh")
+}
