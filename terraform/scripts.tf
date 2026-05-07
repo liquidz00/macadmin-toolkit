@@ -58,3 +58,32 @@ resource "jamfpro_script" "installomator" {
   script_contents = file("${local.vendor_provided_dir}/Installomator.sh")
   info            = "See https://github.com/Installomator/Installomator"
 }
+
+resource "jamfpro_script" "clear_downloads" {
+  name            = "Clear Downloads"
+  category_id     = jamfpro_category.standard_issue.id
+  priority        = "AFTER"
+  script_contents = file("${local.py_dir}/clear_downloads.py")
+  info            = "Removes all contents of the active console user's ~/Downloads directory. Designed for weekly weekend execution via recurring policy."
+  parameter4      = "Dry-run (True/False)"
+}
+
+resource "jamfpro_script" "default_dock_dockutil" {
+  name            = "Default Dock (dockutil)"
+  category_id     = jamfpro_category.standard_issue.id
+  priority        = "AFTER"
+  script_contents = file("${local.py_dir}/default_dock.py")
+  info            = "Configures the active console user's Dock with the org's standard apps via dockutil. Requires /usr/local/bin/dockutil."
+  parameter4      = "Dry-run (True/False)"
+  parameter5      = "Custom app path (optional)"
+}
+
+resource "jamfpro_script" "default_dock_docklib" {
+  name            = "Default Dock (docklib)"
+  category_id     = jamfpro_category.standard_issue.id
+  priority        = "AFTER"
+  script_contents = file("${local.py_dir}/default_dock_docklib.py")
+  info            = "Configures the active console user's Dock with the org's standard apps via the docklib package shipped in macadmins managed_python3."
+  parameter4      = "Dry-run (True/False)"
+  parameter5      = "Custom app path (optional)"
+}
