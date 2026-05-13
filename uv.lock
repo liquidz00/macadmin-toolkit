@@ -204,7 +204,7 @@ requires-dist = [
     { name = "notion-client", specifier = ">=2.2.0" },
     { name = "pydantic", specifier = ">=2.7" },
     { name = "pygithub", specifier = ">=2.4.0" },
-    { name = "requests", specifier = ">=2.32.0" },
+    { name = "requests", specifier = ">=2.34.0" },
     { name = "slack-sdk", specifier = ">=3.33.0" },
 ]
 
@@ -462,7 +462,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "pre-commit", marker = "extra == 'dev'", specifier = ">=4.0.0" },
-    { name = "pymdm", marker = "extra == 'dev'", specifier = ">=0.5.0" },
+    { name = "pymdm", marker = "extra == 'dev'", specifier = ">=0.6.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=5.0.0" },
     { name = "pytest-mock", marker = "extra == 'dev'", specifier = ">=3.14.0" },
@@ -502,14 +502,14 @@ wheels = [
 
 [[package]]
 name = "notion-client"
-version = "3.0.0"
+version = "3.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "httpx" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a5/39/60afcbc0148c3dafaaefe851ae3f058077db49d66288dfb218a11a57b997/notion_client-3.0.0.tar.gz", hash = "sha256:05c4d2b4fa3491dc0de21c9c826277202ea8b8714077ee7f51a6e1a09ab23d0f", size = 31357, upload-time = "2026-02-16T11:15:48.024Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c0/e3/4ac01384e86e2c381c21b87a0fefcdfe6d65577ae3153fad27e7e96c5d9c/notion_client-3.1.0.tar.gz", hash = "sha256:516e31326f855ec34559289b57be4e27ad656062f51f594c8f4ee3a608ee333d", size = 38781, upload-time = "2026-05-12T08:54:44.363Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/aa/ce/6b03f9aedd2edfcc28e23ced5c2582d543f6ddbb2be5c570533f02890b27/notion_client-3.0.0-py2.py3-none-any.whl", hash = "sha256:177fc3d2ace7e8ef69cf96f46269e8a66071c2c7c526194bf06ce7925853e759", size = 18746, upload-time = "2026-02-16T11:15:46.602Z" },
+    { url = "https://files.pythonhosted.org/packages/08/08/12645b24044301cb0d7908ec068c55c0d5724f39372891a1a27d630fdf50/notion_client-3.1.0-py2.py3-none-any.whl", hash = "sha256:7e3935f4dbc11231d8ad1fe404112e278501520342eaa35f86456f0df44a8aca", size = 23092, upload-time = "2026-05-12T08:54:43.135Z" },
 ]
 
 [[package]]
@@ -676,11 +676,11 @@ crypto = [
 
 [[package]]
 name = "pymdm"
-version = "0.5.0"
+version = "0.6.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/a4/d0/6e32ce78bffe7d09565fefa9f727a90feb9f1b63fb7c7a65a127408e5a1e/pymdm-0.5.0.tar.gz", hash = "sha256:f5bbafd377c5ba25d97ea549268e3733fafadc8b167b70f0192936921086ca58", size = 50059, upload-time = "2026-04-18T18:49:31.384Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/06/3e/4bcd267a622f66a62788f440710434d6d52f193e4110bb2b10f17d844897/pymdm-0.6.0.tar.gz", hash = "sha256:ca412d45385c76209887ed40d991f3e9c7f3b0610dab68a02a3d7d43261accec", size = 53514, upload-time = "2026-05-09T22:09:27.237Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c6/9f/f8adfb95c3c82230959ff46fe18b4257a63a67eb4532db965a4ecaba8927/pymdm-0.5.0-py3-none-any.whl", hash = "sha256:204b1519cb5f973e9022268f4ee64bcebf6f4ef7874a986ab6f8b72dc3aab1bd", size = 38470, upload-time = "2026-04-18T18:49:29.795Z" },
+    { url = "https://files.pythonhosted.org/packages/56/7a/8908bfcfe0e298424ce22267e409c8bf1edcae35cd3cf0d41fbfb665441a/pymdm-0.6.0-py3-none-any.whl", hash = "sha256:d44cea0557781bc782cab75d1fbbb5daae1d117528a9c5f189d4c16854e141a9", size = 40416, upload-time = "2026-05-09T22:09:25.983Z" },
 ]
 
 [[package]]
@@ -811,7 +811,7 @@ wheels = [
 
 [[package]]
 name = "requests"
-version = "2.33.1"
+version = "2.34.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "certifi" },
@@ -819,9 +819,9 @@ dependencies = [
     { name = "idna" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5f/a4/98b9c7c6428a668bf7e42ebb7c79d576a1c3c1e3ae2d47e674b468388871/requests-2.33.1.tar.gz", hash = "sha256:18817f8c57c6263968bc123d237e3b8b08ac046f5456bd1e307ee8f4250d3517", size = 134120, upload-time = "2026-03-30T16:09:15.531Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/43/b8/7a707d60fea4c49094e40262cc0e2ca6c768cca21587e34d3f705afec47e/requests-2.34.0.tar.gz", hash = "sha256:7d62fe92f50eb82c529b0916bb445afa1531a566fc8f35ffdc64446e771b856a", size = 142436, upload-time = "2026-05-11T19:29:51.717Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d7/8e/7540e8a2036f79a125c1d2ebadf69ed7901608859186c856fa0388ef4197/requests-2.33.1-py3-none-any.whl", hash = "sha256:4e6d1ef462f3626a1f0a0a9c42dd93c63bad33f9f1c1937509b8c5c8718ab56a", size = 64947, upload-time = "2026-03-30T16:09:13.83Z" },
+    { url = "https://files.pythonhosted.org/packages/ef/e6/e300fce5fe83c30520607a015dabd985df3251e188d234bfe9492e17a389/requests-2.34.0-py3-none-any.whl", hash = "sha256:917520a21b767485ce7c588f4ebb917c436b24a31231b44228715eaeb5a52c60", size = 73021, upload-time = "2026-05-11T19:29:49.923Z" },
 ]
 
 [[package]]
