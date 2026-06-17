@@ -9,10 +9,10 @@ dependencies = []
 dev = [
   "pre-commit>=4.0.0",
   "pymdm>=0.6.0",
-  "pytest>=8.0.0",
+  "pytest>=9.1.0",
   "pytest-cov>=5.0.0",
   "pytest-mock>=3.14.0",
-  "ruff>=0.15.16",
+  "ruff>=0.15.17",
 ]
 
 [tool.uv.workspace]
