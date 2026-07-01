@@ -10,7 +10,7 @@ dependencies = [
   "pydantic>=2.7",
   "PyGithub>=2.4.0",
   "requests>=2.32.0",
-  "slack-sdk>=3.33.0",
+  "slack-sdk>=3.43.0",
 ]
 
 [build-system]
