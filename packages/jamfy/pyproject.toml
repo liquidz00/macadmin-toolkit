@@ -5,7 +5,7 @@ description = "CLI for Jamf Pro automations: exports, change tracking, app insta
 requires-python = ">=3.13"
 dependencies = [
   "asyncclick>=8.4.2.1",
-  "click>=8.1.7",
+  "click>=8.4.2",
   "common",
   "rich>=13.9.0",
 ]
