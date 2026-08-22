@@ -6,6 +6,9 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      github-actions:
+        patterns: ["*"]
     commit-message:
       prefix: "chore"
       include: "scope"
@@ -18,6 +21,22 @@ updates:
       interval: "weekly"
     groups:
       python-deps:
+        patterns: ["*"]
+    # setuptools lives only in [build-system].requires, not uv.lock, so
+    # Dependabot cannot resolve the workspace and the job fails weekly.
+    ignore:
+      - dependency-name: "setuptools"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # Terraform providers (Jamf Pro)
+  - package-ecosystem: "terraform"
+    directory: "/terraform"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform-providers:
         patterns: ["*"]
     commit-message:
       prefix: "chore"
