@@ -1,43 +1,47 @@
-version: 2
-updates:
+# To have Dependabot manage project deps, github actions and terraform providers,
+# uncomment this entire file and commit it to your repository.
+# Make modifications to intervals as needed to best fit your org's needs.
+
+# version: 2
+# updates:
 
   # GitHub Actions
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-    groups:
-      github-actions:
-        patterns: ["*"]
-    commit-message:
-      prefix: "chore"
-      include: "scope"
+  # - package-ecosystem: "github-actions"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "monthly"
+  #   groups:
+  #     github-actions:
+  #       patterns: ["*"]
+  #   commit-message:
+  #     prefix: "chore"
+  #     include: "scope"
 
   # Python (uv-managed). Groups all updates into a single weekly PR
   # to keep noise down; security alerts still fire individually.
-  - package-ecosystem: "uv"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    groups:
-      python-deps:
-        patterns: ["*"]
+  # - package-ecosystem: "uv"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "weekly"
+  #   groups:
+  #     python-deps:
+  #       patterns: ["*"]
     # setuptools lives only in [build-system].requires, not uv.lock, so
     # Dependabot cannot resolve the workspace and the job fails weekly.
-    ignore:
-      - dependency-name: "setuptools"
-    commit-message:
-      prefix: "chore"
-      include: "scope"
+    # ignore:
+    #   - dependency-name: "setuptools"
+    # commit-message:
+    #   prefix: "chore"
+    #   include: "scope"
 
   # Terraform providers (Jamf Pro)
-  - package-ecosystem: "terraform"
-    directory: "/terraform"
-    schedule:
-      interval: "weekly"
-    groups:
-      terraform-providers:
-        patterns: ["*"]
-    commit-message:
-      prefix: "chore"
-      include: "scope"
+  # - package-ecosystem: "terraform"
+  #   directory: "/terraform"
+  #   schedule:
+  #     interval: "weekly"
+  #   groups:
+  #     terraform-providers:
+  #       patterns: ["*"]
+  #   commit-message:
+  #     prefix: "chore"
+  #     include: "scope"
